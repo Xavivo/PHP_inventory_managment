@@ -1,57 +1,77 @@
 <?php
-
+// PARTE 1: Inventario
 $carrito = [];
 $inventario = [
     "Electronica" => [
-        "Switch 2" => ["nombre" => "Switch 2", "precio" => 400, "cantidad" => 10],
-        "Iphone 16" => ["nombre" => "Iphone 16", "precio" => 600, "cantidad" => 5],
+        "Switch 2" => ["nombre" => "Switch 2", "precio" => 300, "cantidad" => 5],
+        "Iphone 16" => ["nombre" => "Iphone 16", "precio" => 800, "cantidad" => 2],
         "Auriculares Logitech" => ["nombre" => "Auriculares Logitech", "precio" => 30, "cantidad" => 15]
     ],
     "Ropa" => [
-        "Chaqueta" => ["nombre" => "Chaqueta", "precio" => 69.99, "cantidad" => 19],
-        "Camiseta" => ["nombre" => "Camiseta", "precio" => 25.99, "cantidad" => 60]
-    ],
-    "Alimentos" => [
-        "Barrita Kitkat" => ["nombre" => "Barrita Kitkat", "precio" => 2, "cantidad" => 100],
-        "Pan de masa madre" => ["nombre" => "Pan de", "precio" => 1.5, "cantidad" => 23]
+        "Chaqueta" => ["nombre" => "Chaqueta", "precio" => 60, "cantidad" => 10],
+        "Guantes" => ["nombre" => "Guantes", "precio" => 3, "cantidad" => 20]
     ]
 ];
 
+// PARTE 2: Función para agregar
 function agregarAlCarrito($categoria, $producto, $cantidad) {
     global $inventario, $carrito;
 
-    $precioUnitario = $inventario[$categoria][$producto]["precio"];
+    // Accedemos a los datos del producto directamente
+    $datosProducto = $inventario[$categoria][$producto];
+    $stockActual = $datosProducto["cantidad"];
+    $precio = $datosProducto["precio"];
 
-    if ($inventario[$categoria][$producto]["cantidad"] >= $cantidad) {
-        $carrito[] = [
-            "nombre" => $producto,
-            "cantidad" => $cantidad,
-            "precio" => $precioUnitario
-        ];
+    // Comprobamos si el producto existe (si el nombre es igual al que buscamos)
+    if ($datosProducto["nombre"] == "") {
+        echo "El producto seleccionado no existe\n";
+    } 
+    // Comprobamos si hay stock
+    else if ($stockActual < $cantidad) {
+        echo "No hay suficiente stock del producto seleccionado\n";
+    } 
+    else {
+        $carrito[] = ["producto" => $producto, "cantidad" => $cantidad, "precio" => $precio];
 
-        $inventario[$categoria][$producto]["cantidad"] = $inventario[$categoria][$producto]["cantidad"] - $cantidad;
+        // Restamos el stock en el inventario
+        $inventario[$categoria][$producto]["cantidad"] = $stockActual - $cantidad;
         
-        // Usamos \n para la consola
-        echo "Se ha añadido: " . $producto . " al carrito.\n";
-    } else {
-        echo "No hay suficiente stock de " . $producto . "\n";
+        echo "Se ha añadido: " . $producto . "\n";
     }
+}
+
+// Función para mostrar lo agregado con la función anterior
+function mostrarCarrito() {
+    global $carrito;
+    $total = 0;
+
+    echo "\nMostrando carrito abajo...\n\n";
+
+    // Recorremos el carrito con un foreach
+    foreach ($carrito as $item) {
+        $nombre = $item["producto"];
+        $cant = $item["cantidad"];
+        $precioUnidad = $item["precio"];
+        
+        $subtotal = $precioUnidad * $cant;
+        $total = $total + $subtotal; // Vamos sumando al total
+
+        echo "Producto: " . $nombre . " | Cantidad: " . $cant . " | Precio: " . $subtotal . "€\n";
+    }
+
+    // Miramos si hay que aplicar descuento
+    if ($total > 100) {
+        $descuento = $total * 0.10; // Calculamos el 10%
+        $total = $total - $descuento; // Se lo restamos al total
+        echo "Descuento del 10% aplicado perfectamente\n\n";
+    }
+
+    echo "El total de la compra es: " . $total . "€\n";
 }
 
 agregarAlCarrito("Electronica", "Switch 2", 1);
 agregarAlCarrito("Ropa", "Chaqueta", 2);
 
-function mostrarCarrito() {
-    global $carrito;
-    $total = 0;
-
-    echo "Contenido del carrito:\n";
-    foreach ($carrito as $producto) {
-        $subtotal = $producto["precio"] * $producto["cantidad"];
-        $total += $subtotal;
-        echo "- " . $producto["nombre"] . ": " . $producto["cantidad"] . " x $" . $producto["precio"] . " = $" . $subtotal . "\n";
-    }
-    echo "El total a pagar es: $" . $total . "\n";
-}
-
 mostrarCarrito();
+
+?>
