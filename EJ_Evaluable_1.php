@@ -10,6 +10,10 @@ $inventario = [
     "Ropa" => [
         "Chaqueta" => ["nombre" => "Chaqueta", "precio" => 60, "cantidad" => 10],
         "Guantes" => ["nombre" => "Guantes", "precio" => 3, "cantidad" => 20]
+    ],
+    "Alimentos" => [
+        "Leche" => ["nombre" => "Leche", "precio" => 1.5, "cantidad" => 50],
+        "Kebab" => ["nombre" => "Kebab", "precio" => 6, "cantidad" => 30]
     ]
 ];
 
@@ -71,6 +75,7 @@ function mostrarCarrito() {
 
 agregarAlCarrito("Electronica", "Switch 2", 1);
 agregarAlCarrito("Ropa", "Chaqueta", 2);
+agregarAlCarrito("Alimentos", "Kebab", 5);
 
 mostrarCarrito();
 
