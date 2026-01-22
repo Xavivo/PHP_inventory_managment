@@ -31,16 +31,16 @@ function agregarAlCarrito($categoria, $producto, $cantidad) {
 
         $inventario[$categoria][$producto]["cantidad"] = $inventario[$categoria][$producto]["cantidad"] - $cantidad;
         
-        echo "Añadido: " . $producto . " al carrito.<br>";
+        // Usamos \n para la consola
+        echo "Añadido: " . $producto . " al carrito.\n";
     } else {
-        echo "No tenemos suficiente stock de " . $producto . "<br>";
+        echo "No tenemos suficiente stock de " . $producto . "\n";
     }
 }
 
-// Agregamos y mostramos por consola
 agregarAlCarrito("Electronica", "Switch 2", 1);
 agregarAlCarrito("Ropa", "Chaqueta", 2);
 
+echo "\nSTOCK\n";
 print_r($inventario["Electronica"]["Switch 2"]);
 print_r($inventario["Ropa"]["Chaqueta"]);
-?>
