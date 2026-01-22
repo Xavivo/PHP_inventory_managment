@@ -32,15 +32,26 @@ function agregarAlCarrito($categoria, $producto, $cantidad) {
         $inventario[$categoria][$producto]["cantidad"] = $inventario[$categoria][$producto]["cantidad"] - $cantidad;
         
         // Usamos \n para la consola
-        echo "Añadido: " . $producto . " al carrito.\n";
+        echo "Se ha añadido: " . $producto . " al carrito.\n";
     } else {
-        echo "No tenemos suficiente stock de " . $producto . "\n";
+        echo "No hay suficiente stock de " . $producto . "\n";
     }
 }
 
 agregarAlCarrito("Electronica", "Switch 2", 1);
 agregarAlCarrito("Ropa", "Chaqueta", 2);
 
-echo "\nSTOCK\n";
-print_r($inventario["Electronica"]["Switch 2"]);
-print_r($inventario["Ropa"]["Chaqueta"]);
+function mostrarCarrito() {
+    global $carrito;
+    $total = 0;
+
+    echo "Contenido del carrito:\n";
+    foreach ($carrito as $producto) {
+        $subtotal = $producto["precio"] * $producto["cantidad"];
+        $total += $subtotal;
+        echo "- " . $producto["nombre"] . ": " . $producto["cantidad"] . " x $" . $producto["precio"] . " = $" . $subtotal . "\n";
+    }
+    echo "El total a pagar es: $" . $total . "\n";
+}
+
+mostrarCarrito();
