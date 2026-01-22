@@ -67,7 +67,7 @@ function mostrarCarrito() {
     if ($total > 100) {
         $descuento = $total * 0.10; // Calculamos el 10%
         $total = $total - $descuento; // Se lo restamos al total
-        echo "Descuento del 10% aplicado perfectamente\n\n";
+        echo "\nDescuento del 10% aplicado perfectamente\n\n";
     }
 
     echo "El total de la compra es: " . $total . "€\n";
