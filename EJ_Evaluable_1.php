@@ -1,5 +1,5 @@
 <?php
-// PARTE 1: Inventario
+// Array del inventario que tendremos
 $carrito = [];
 $inventario = [
     "Electronica" => [
@@ -17,7 +17,7 @@ $inventario = [
     ]
 ];
 
-// PARTE 2: Función para agregar
+// Agregar al carrito
 function agregarAlCarrito($categoria, $producto, $cantidad) {
     global $inventario, $carrito;
 
